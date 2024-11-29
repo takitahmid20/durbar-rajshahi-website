@@ -19,11 +19,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Updated navigation links to include Teams page
+  // Updated navigation links to include Players page
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '#about' },
     { name: 'Squad', href: '#squad' },
+    { name: 'Players', href: '/players' },
     { name: 'Teams', href: '/teams' },
     { name: 'Schedule', href: '#schedule' },
     { name: 'Explore', href: '#explore' },

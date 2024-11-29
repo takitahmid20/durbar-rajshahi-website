@@ -43,7 +43,7 @@ const Hero = () => {
               <span className="animate-pulse px-3 py-1 rounded-full bg-dr-orange text-white text-sm">
                 LIVE
               </span>
-              <span className="text-gray-300">Next Match: Feb 15, 2024</span>
+              <span className="text-gray-300">Next Match: Dec 30, 2024</span>
             </div>
 
             {/* Main Title */}

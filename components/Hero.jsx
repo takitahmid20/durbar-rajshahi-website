@@ -1,10 +1,13 @@
 "use client"
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import { getNextMatch, getMatchStatus } from '@/utils/matchUtils'
 
 const Hero = () => {
   const heroRef = useRef(null)
+  const [nextMatch, setNextMatch] = useState(getNextMatch())
+  const [matchStatus, setMatchStatus] = useState(getMatchStatus(nextMatch.date, nextMatch.time))
 
   useEffect(() => {
     const targetElement = heroRef.current
@@ -21,10 +24,18 @@ const Hero = () => {
       observer.observe(targetElement)
     }
 
+    // Update match status every minute
+    const interval = setInterval(() => {
+      const currentNextMatch = getNextMatch()
+      setNextMatch(currentNextMatch)
+      setMatchStatus(getMatchStatus(currentNextMatch.date, currentNextMatch.time))
+    }, 60000)
+
     return () => {
       if (targetElement) {
         observer.unobserve(targetElement)
       }
+      clearInterval(interval)
     }
   }, [])
 
@@ -40,10 +51,10 @@ const Hero = () => {
           <div className="lg:col-span-7 space-y-8" ref={heroRef}>
             {/* Animated Stats Bar */}
             <div className="flex items-center space-x-4 bg-white/5 backdrop-blur-sm p-2 rounded-full w-fit">
-              <span className="animate-pulse px-3 py-1 rounded-full bg-dr-orange text-white text-sm">
-                LIVE
+              <span className={`animate-pulse px-3 py-1 rounded-full ${matchStatus.status === 'live' ? 'bg-green-500' : 'bg-dr-orange'} text-white text-sm`}>
+                {matchStatus.label}
               </span>
-              <span className="text-gray-300">Next Match: Dec 30, 2024</span>
+              <span className="text-gray-300">Next Match: {nextMatch.date}, {nextMatch.time}</span>
             </div>
 
             {/* Main Title */}

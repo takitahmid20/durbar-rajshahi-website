@@ -7,6 +7,7 @@ const Hero = () => {
   const heroRef = useRef(null)
 
   useEffect(() => {
+    const targetElement = heroRef.current
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -16,13 +17,13 @@ const Hero = () => {
       { threshold: 0.1 }
     )
 
-    if (heroRef.current) {
-      observer.observe(heroRef.current)
+    if (targetElement) {
+      observer.observe(targetElement)
     }
 
     return () => {
-      if (heroRef.current) {
-        observer.unobserve(heroRef.current)
+      if (targetElement) {
+        observer.unobserve(targetElement)
       }
     }
   }, [])

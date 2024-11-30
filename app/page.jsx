@@ -16,12 +16,23 @@ export default function Home() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in-up')
+          entry.target.classList.add('animate-fade-in')
         }
       })
     })
 
     document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el))
+
+    // Handle hash scroll after navigation
+    const hash = window.location.hash
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    }
 
     return () => observer.disconnect()
   }, [])

@@ -35,13 +35,18 @@ const Navbar = () => {
     setIsMobileMenuOpen(false)
     
     if (href.startsWith('#')) {
-      // Handle anchor links with smooth scrolling
-      const element = document.querySelector(href)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+      if (window.location.pathname === '/') {
+        // If on home page, just scroll
+        const element = document.querySelector(href)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      } else {
+        // If on another page, navigate to home with hash
+        router.push(`/${href}`)
       }
     } else {
-      // Handle page navigation
+      // Handle regular page navigation
       router.push(href)
     }
   }
